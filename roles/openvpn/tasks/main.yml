@@ -16,6 +16,7 @@
 # github.com/webdevvie/openvpn-ansible-setup.git
  - include: install-postfix.yml
    when: install_postfix == 'yes'
+
  - include: install-packages.yml
  - include: create-user.yml
  - include: setup-firewall.yml
