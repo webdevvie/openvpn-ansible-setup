@@ -1,0 +1,37 @@
+[openvpn]
+256.256.256.256
+##YOUR SERVER IPs GOES HERE plus any changed config you want(check the vars below)##
+## MAKE A COPY OF THIS FILE :) ##
+
+[openvpn:vars]
+#change this to anything but yes if you have already installed postfix and mailutils
+install_postfix = yes
+
+openvpn_public_hostname = vpn.example.com
+openvpn_public_networkname = example.com
+internal_network_vpn_server_ip=10.9.1.1
+internal_network_vpn_network = 10.9.1.0
+internal_network_vpn_server= 10.9.0.0 255.255.0.0
+internal_network_interface = eth1
+openvpn_port = 1194
+remote_user = youradminuserthatcansudo
+openvpn_user = openvpn
+# this is the ip the machine has that will be reachable from outside your network
+# So if you are configuring your openvpn to be inside your home network (10.0.0.1/24) set it to its
+# 10.0.0.x ip and  let your router let traffic through on the {{openvpn_port}} to that ip
+# if this is for a datacenter situation : Give in your server's public ip :)
+openvpn_public_ip = 256.256.256.256
+
+
+OPENVPN_CA_EXPIRE = 3650
+OPENVPN_KEY_EXPIRE = 3650
+OPENVPN_KEY_SIZE = 1024
+
+OPENVPN_KEY_COUNTRY = NL
+OPENVPN_KEY_PROVINCE = ZH
+OPENVPN_KEY_CITY = Gouda
+OPENVPN_KEY_ORG = examplecom
+OPENVPN_KEY_EMAIL = admin@example.com
+OPENVPN_KEY_CN = examplecom
+OPENVPN_KEY_NAME = examplecom-key
+OPENVPN_KEY_OU = examplecom

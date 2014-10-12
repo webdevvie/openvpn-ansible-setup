@@ -1,0 +1,46 @@
+
+local {{openvpn_public_ip}}
+
+port {{openvpn_port}}
+proto tcp
+
+dev tun
+
+
+ca keys/ca.crt
+cert keys/{{OPENVPN_KEY_ORG}}.crt
+key keys/{{OPENVPN_KEY_ORG}}.key  # This file should be kept secret
+
+dh easy-rsa/2.0/keys/dh1024.pem
+
+server {{internal_network_vpn_network}} 255.255.255.0
+
+ifconfig-pool-persist ipp.txt
+
+route {{internal_network_vpn_server}}
+push "route {{internal_network_vpn_server}}"
+
+client-to-client
+
+
+keepalive 10 120
+
+
+cipher AES-256-CBC   # AES
+
+comp-lzo
+
+max-clients 100
+
+
+;user nobody
+;group nogroup
+
+persist-key
+persist-tun
+status /var/log/openvpn-status.log
+log         /var/log/openvpn.log
+log-append  /var/log/openvpn.log
+verb 3
+
+crl-verify /etc/openvpn/keys/crl.pem

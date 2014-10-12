@@ -1,0 +1,50 @@
+#!/bin/sh
+# Copyright 2014 John Bakker <me@johnbakker.name>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+cd /etc/openvpn/easy-rsa/2.0/
+
+
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied"
+    exit 1
+fi
+
+
+if [ -z "$1" ]
+  then
+    echo "Please add a name for certificate"
+fi
+
+if [ -z "$2" ]
+  then
+    echo "Please supply an emailadress to send the certificate to"
+fi
+
+echo "Generating user keys for $1"
+echo "You will be asked to supply a password"
+. ./vars
+
+export KEY_CN=$1
+./pkitool --pass $1
+mkdir -p keys/{{OPENVPN_KEY_ORG}}-$1.tblk
+cd keys
+cp /etc/openvpn/keys/ca.crt /etc/openvpn/keys/{{OPENVPN_KEY_ORG}}-$1.tblk/
+cp /etc/openvpn/keys/$1.crt /etc/openvpn/keys/{{OPENVPN_KEY_ORG}}-$1.tblk/
+cp /etc/openvpn/keys/$1.key /etc/openvpn/keys/{{OPENVPN_KEY_ORG}}-$1.tblk/
+sed -e s/__USERNAME__/$1/g /etc/openvpn/client.template >>/etc/openvpn/keys/{{OPENVPN_KEY_ORG}}-$1.tblk/client.conf
+tar -cvzf {{OPENVPN_KEY_ORG}}-$1.tar.gz {{OPENVPN_KEY_ORG}}-$1.tblk
+
+sed -e s/__USERNAME__/$1/g /etc/openvpn/default-email.txt | mutt -a "/etc/openvpn/keys/{{OPENVPN_KEY_ORG}}-$1.tar.gz" -s "OPENVPN config" -- $2
