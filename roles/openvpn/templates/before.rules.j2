@@ -68,5 +68,5 @@
 -A INPUT -i tun+ -j ACCEPT
 -A FORWARD -i tun+ -j ACCEPT
 
--A POSTROUTING -o {{internal_network_interface}} -s {{internal_network_vpn_network}}/24 -j MASQUERADE
+-t nat -A POSTROUTING -o {{internal_network_interface}} -s {{internal_network_vpn_network}}/24 -j MASQUERADE
 COMMIT
