@@ -47,10 +47,6 @@ I wasn't able to find any straightforward "set up Openvpn" ansible playbooks for
 Since I hate repeating the same work over and over. I thought: "Why not make one myself?"
 And here is the result.
 
-## Using this and want to thank me ?
-Please conciser donating sending some mBT to me ;)
-1KkRZBVJdAox5QohCzbE5DBQHkNQFNThCA
-
 # License
 
 Copyright 2014 John Bakker <me@johnbakker.name>
