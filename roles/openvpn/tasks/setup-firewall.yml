@@ -25,7 +25,7 @@
   lineinfile: dest=/etc/ufw/sysctl.conf regexp='^#net.ipv4.ip_forward' line='net.ipv4.ip_forward=1' state=present
 
 - name: install before.rules
-  template: src=before.rules.j2 dest=/usr/share/ufw/before.rules
+  template: src=before.rules.j2 dest=/etc/ufw/before.rules
 
 - name: Setup ufw to allow connections on port 22
   shell: ufw allow 22/tcp
