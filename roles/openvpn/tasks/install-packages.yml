@@ -22,3 +22,4 @@
     - openvpn
     - udev
     - bridge-utils
+    - mutt
